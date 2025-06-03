@@ -31,7 +31,7 @@ module "sg_group" {
 
 
 locals {
-  user_data_home = <<-EOF
+  user_data = <<-EOF
               #!/bin/bash
               sudo yum update -y
               sudo amazon-linux-extras install docker -y
