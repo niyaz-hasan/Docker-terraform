@@ -32,10 +32,11 @@ module "sg_group" {
 locals {
   user_data = <<-EOF
               #!/bin/bash
-              yum install -y nginx
-              systemctl start nginx
-              systemctl enable nginx
-              echo "<p>Instance A</p>" >> /usr/share/nginx/html/index.html
+              apt-get update -y
+              apt-get install -y docker.io
+              systemctl enable docker
+              systemctl start docker
+              docker run -d -p 80:8080 --name openproject openproject/community:12
           EOF
 }
 
