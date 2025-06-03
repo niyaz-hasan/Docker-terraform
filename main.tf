@@ -31,17 +31,17 @@ module "sg_group" {
 
 
 locals {
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo yum update -y
-              sudo amazon-linux-extras install docker -y
-              sudo service docker start
-              sudo usermod -a -G docker ec2-user
-              sudo chkconfig docker on
-              sleep 10
-              sudo docker run -itd -p 80:8080 --name openproject openproject/community:12
-          EOF
+  user_data = <<-EOF
+         #!/bin/bash
+         echo "<h1>Welcome to Homepage</h1>" > /var/www/html/index.html
+         yum install -y nginx
+         systemctl start nginx
+         systemctl enable nginx
+         echo "<h1>Home</h1>" > /usr/share/nginx/html/index.html
+         echo "<p>Instance A</p>" >> /usr/share/nginx/html/index.html
+    EOF
 }
+
 
 
 
