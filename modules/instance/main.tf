@@ -1,5 +1,5 @@
 resource "aws_instance" "this" {
-  ami           = "ami-084568db4383264d4"  # Replace with appropriate AMI
+  ami           = "ami-02457590d33d576c3"  # Replace with appropriate AMI
   instance_type = "t2.micro"
   subnet_id     = var.subnet_id
   vpc_security_group_ids = var.vpc_security_group_ids
