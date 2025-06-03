@@ -57,10 +57,6 @@ resource "aws_security_group" "rds_sg" {
   }
 }
 
-output "rds_security_group_id" {
-  description = "Security group ID for the RDS"
-  value       = aws_security_group.rds_sg.id 
-}
 
 output "alb_security_group_id" {
   description = "Security group ID for the Application Load Balancer"

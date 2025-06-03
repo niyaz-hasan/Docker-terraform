@@ -3,8 +3,6 @@ module "vpc" {
   name           = var.name
   vpc_cidr_block = var.vpc_cidr_block
   
-  
-
 }
 
 module "alb" {
@@ -32,47 +30,23 @@ module "sg_group" {
 
 
 locals {
-  user_data_a = <<-EOF
+  user_data = <<-EOF
               #!/bin/bash
               yum install -y nginx
               systemctl start nginx
               systemctl enable nginx
               echo "<p>Instance A</p>" >> /usr/share/nginx/html/index.html
           EOF
-
-  user_data_b = <<-EOF
-              #!/bin/bash
-              yum install -y nginx
-              systemctl start nginx
-              systemctl enable nginx
-              echo "<p>Instance B</p>" >> /usr/share/nginx/html/index.html
-          EOF
 }
 
 
-module "instances_a" {
+module "instance" {
   source          = "./modules/instance"
   tg_arn          = module.target_group.arn
   subnet_id       = module.vpc.public_subnets[0]
   vpc_security_group_ids = [module.sg_group.ec2_security_group_id]
-  user_data       = local.user_data_a
-  name            = "instance-a"
+  user_data       = local.user_data
+  name            = "Docker-instance"
 }
 
-module "instances_b" {
-  source          = "./modules/instance"
-  tg_arn          = module.target_group.arn
-  subnet_id       = module.vpc.public_subnets[1]
-  vpc_security_group_ids = [module.sg_group.ec2_security_group_id]
-  user_data       = local.user_data_b
-  name            = "instance-b"
-}
 
-module "rds" {
-  source               = "./modules/rds"
-  name                 = var.name
-  private_subnets      = module.vpc.private_subnets
-  db_username          = "admin"
-  db_password          = "y7Yfyr8oHIUvkDs4"
-  rds_security_group_ids  = [module.sg_group.rds_security_group_id]
-}
