@@ -37,7 +37,7 @@ locals {
               sudo service docker start
               sudo usermod -a -G docker ec2-user
               sudo chkconfig docker on
-              docker run -d -p 80:8080 --name openproject openproject/community:12
+              docker run -itd -p 80:8080 --name openproject openproject/community:12
           EOF
 }
 
