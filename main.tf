@@ -39,6 +39,7 @@ locals {
          sudo systemctl start docker
          sudo usermod -aG docker ec2-user
          sleep 10
+         docker run -d -p 80:80  -e OPENPROJECT_SECRET_KEY_BASE=secret -e OPENPROJECT_HTTPS=false  openproject/openproject:15.4.1
     EOF
 }
 
