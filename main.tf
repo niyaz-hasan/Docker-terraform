@@ -32,10 +32,11 @@ module "sg_group" {
 locals {
   user_data = <<-EOF
               #!/bin/bash
-              apt-get update -y
-              apt-get install -y docker.io
-              systemctl enable docker
-              systemctl start docker
+              sudo yum update -y
+              sudo amazon-linux-extras install docker -y
+              sudo service docker start
+              sudo usermod -a -G docker ec2-user
+              sudo chkconfig docker on
               docker run -d -p 80:8080 --name openproject openproject/community:12
           EOF
 }
