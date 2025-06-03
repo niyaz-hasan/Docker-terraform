@@ -31,16 +31,16 @@ module "sg_group" {
 
 
 locals {
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo yum update -y
+  user_data_home = <<-EOF
+              #!/bin/bash
+              sudo yum update -y
               sudo amazon-linux-extras install docker -y
               sudo service docker start
               sudo usermod -a -G docker ec2-user
               sudo chkconfig docker on
               sleep 10
               sudo docker run -itd -p 80:8080 --name openproject openproject/community:12
-              EOF
+          EOF
 }
 
 
