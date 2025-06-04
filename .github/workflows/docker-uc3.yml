@@ -32,6 +32,16 @@ jobs:
           role-to-assume: arn:aws:iam::975049998898:role/githubaction-assumerole
           role-session-name: github-assume
           aws-region: us-east-1
+          
+      - name: Install TFLint
+        run: |
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
+      - name: Run TFLint
+        continue-on-error: true
+        run: |
+          tflint --init
+          tflint --recursive
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
