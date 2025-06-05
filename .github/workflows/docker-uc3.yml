@@ -54,6 +54,27 @@ jobs:
         continue-on-error: true
         run: |
           checkov -d  .    # Scan the current directory for Terraform files.
+
+      - name: Install terraform-docs
+        run: |
+          curl -sSLo terraform-docs.tar.gz https://terraform-docs.io/dl/v0.20.0/terraform-docs-v0.20.0-linux-amd64.tar.gz
+          tar -xzf terraform-docs.tar.gz
+          chmod +x terraform-docs
+          sudo mv terraform-docs /usr/local/bin/
+ 
+ 
+      - name: Generate Terraform Docs
+        run: |
+          terraform-docs markdown table . > README.md
+ 
+      - name: Commit Terraform Docs
+        run: |
+          git config --global user.name "niyaz-hasan"
+          git config --global user.email "niyazzz1996@gmail.com"
+          git add README.md
+          git commit -m "Update Terraform docs [skip ci]" || echo "No changes to commit"
+          git push
+
       
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
