@@ -55,25 +55,25 @@ jobs:
         run: |
           checkov -d ./ --skip-path .github/* --soft-fail    # Scan the current directory for Terraform files.
 
-      - name: Install terraform-docs
-        run: |
-          curl -sSLo terraform-docs.tar.gz https://terraform-docs.io/dl/v0.20.0/terraform-docs-v0.20.0-linux-amd64.tar.gz
-          tar -xzf terraform-docs.tar.gz
-          chmod +x terraform-docs
-          sudo mv terraform-docs /usr/local/bin/
- 
- 
-      - name: Generate Terraform Docs
-        run: |
-          terraform-docs markdown table . > README.md
-      
-      - name: Commit and push changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          git commit -m "Update Terraform docs [skip ci]" || echo "No changes to commit"
-          git push 
+#      - name: Install terraform-docs
+#        run: |
+#          curl -sSLo terraform-docs.tar.gz https://terraform-docs.io/dl/v0.20.0/terraform-docs-v0.20.0-linux-amd64.tar.gz
+#          tar -xzf terraform-docs.tar.gz
+#          chmod +x terraform-docs
+#          sudo mv terraform-docs /usr/local/bin/
+# 
+# 
+#      - name: Generate Terraform Docs
+#        run: |
+#          terraform-docs markdown table . > README.md
+#      
+#      - name: Commit and push changes
+#        run: |
+#          git config --global user.name "github-actions[bot]"
+#          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+#          git add README.md
+#          git commit -m "Update Terraform docs [skip ci]" || echo "No changes to commit"
+#          git push 
 
       
       - name: Setup Terraform
@@ -89,9 +89,44 @@ jobs:
 
       - name: Terraform validate 
         run: terraform validate
+
+      - name: Run Terraform Plan
+        id: plan
+        run: terraform plan -out=tfplan
+
+      - name: Generate Terraform Plan Output
+        run: terraform show -no-color tfplan > plan.txt
+
+      - name: Install terraform-docs
+        run: |
+          curl -sSL https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-linux-amd64.tar.gz | tar xz
+          sudo mv terraform-docs /usr/local/bin/
+
+      - name: Generate Terraform Documentation
+        run: terraform-docs markdown . > README.md
+
+      - name: Commit and Push Documentation (if needed)
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: 'Terraform Bot'
+          author_email: 'terraform@bot.com'
+          message: 'Update README.md with Terraform docs'
+
+      - name: Post Terraform Plan as PR comment
+        uses: peter-evans/comment-pr@v2
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### Terraform Plan Output
+            ```plaintext
+            $(cat plan.txt)
+            ```
+      
+      
+
   
-      - name: Terraform Plan
-        run: terraform plan 
+#      - name: Terraform Plan
+#        run: terraform plan 
       
 #      - name: Generate Terraform Docs
 #        uses: terraform-docs/gh-actions@v1.4.1
