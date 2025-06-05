@@ -130,6 +130,16 @@ jobs:
           output-method: inject
           git-push: "true"
 
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Update Terraform docs"
+          git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
       - name: Terraform Apply
         if: contains(github.event.head_commit.message, 'terraform apply')
         run: terraform apply -auto-approve 
