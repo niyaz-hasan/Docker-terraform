@@ -1,0 +1,26 @@
+# .checkov.yaml
+
+# Disable checks for S3 public access (common policy in many organizations)
+skip_checks:
+  - CKV_AWS_21
+
+# Enable only Terraform checks
+enabled_check_types:
+  - terraform
+
+# Custom checks directory
+#custom_checks_dir: ./checkov_custom_rules
+
+# Output settings
+output:
+  format: json
+  output_path: ./checkov_results.json
+
+# Enable verbose logging
+verbose: true
+
+# Skip specific directories (e.g., vendor, tests)
+skip_dirs:
+  - .github
+
+
