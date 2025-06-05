@@ -64,11 +64,11 @@ jobs:
           fi
           
       # Optional: Upload Checkov results to GitHub.
-      - name: Upload Checkov results to GitHub
-        uses: actions/upload-artifact@v3
-        with:
-          name: checkov-results
-          path: checkov_output.txt
+    #  - name: Upload Checkov results to GitHub
+    #    uses: actions/upload-artifact@v3
+    #    with:
+    #      name: checkov-results
+    #      path: checkov_output.txt
 
       # Optional: Fail the workflow if Checkov finds issues.
       - name: Fail if Checkov finds issues
