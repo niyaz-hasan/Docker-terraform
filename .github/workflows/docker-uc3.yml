@@ -58,7 +58,7 @@ jobs:
           
       - name: Run Checkov Scan with Custom Rules
         run: |
-          checkov -d . -p ./checkov_custom_rules  # Point to custom rules
+          checkov -d . --custom-checks ./checkov_custom_rules  # Point to custom rules
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
