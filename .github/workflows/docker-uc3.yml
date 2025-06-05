@@ -55,26 +55,26 @@ jobs:
 #        run: |
 #          checkov -d  .    # Scan the current directory for Terraform files.
 
-      - name: Install terraform-docs
-        run: |
-          curl -sSLo terraform-docs.tar.gz https://terraform-docs.io/dl/v0.20.0/terraform-docs-v0.20.0-linux-amd64.tar.gz
-          tar -xzf terraform-docs.tar.gz
-          chmod +x terraform-docs
-          sudo mv terraform-docs /usr/local/bin/
+#      - name: Install terraform-docs
+#        run: |
+#          curl -sSLo terraform-docs.tar.gz https://terraform-docs.io/dl/v0.20.0/terraform-docs-v0.20.0-linux-amd64.tar.gz
+#          tar -xzf terraform-docs.tar.gz
+#          chmod +x terraform-docs
+#          sudo mv terraform-docs /usr/local/bin/
  
  
-      - name: Generate Terraform Docs
-        run: |
-          terraform-docs markdown table . > README.md
+#      - name: Generate Terraform Docs
+#        run: |
+#          terraform-docs markdown table . > README.md
 
-      # Commit and push the generated documentation (if necessary)
-      - name: Commit and push docs
-        uses: EndBug/add-and-commit@v7
-        with:
-          author_name: 'GitHub Actions'
-          author_email: 'github-actions@github.com'
-          message: 'Update Terraform documentation'
-          add: 'README.md'  # Adjust path if you want to target a different file
+#      # Commit and push the generated documentation (if necessary)
+#      - name: Commit and push docs
+#        uses: EndBug/add-and-commit@v7
+#        with:
+#          author_name: 'GitHub Actions'
+#          author_email: 'github-actions@github.com'
+#          message: 'Update Terraform documentation'
+#          add: 'README.md'  # Adjust path if you want to target a different file
  
 #      - name: Commit Terraform Docs
 #        run: |
@@ -119,7 +119,16 @@ jobs:
         run: terraform validate
   
       - name: Terraform Plan
-        run: terraform plan 
+        run: terraform plan -out=tfplan.txt
+        working-directory: ./
+      
+      - name: Generate Terraform Docs
+        uses: terraform-docs/gh-actions@v1.4.1
+        with:
+          working-dir: ./
+          output-file: README.md
+          output-method: inject
+          git-push: "true"
 
       - name: Terraform Apply
         if: contains(github.event.head_commit.message, 'terraform apply')
