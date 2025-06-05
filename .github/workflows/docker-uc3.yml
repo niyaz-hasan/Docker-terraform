@@ -52,7 +52,7 @@ jobs:
       # Run Checkov to scan Terraform files.
       - name: Run Checkov Scan
         run: |
-          checkov -d .  > checkov_output.txt  # Scan the current directory for Terraform files.
+          checkov -d .    # Scan the current directory for Terraform files.
       
       - name: Check if Checkov output file exists
         run: |
