@@ -63,12 +63,12 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
       - name: Terraform validate 
         run: terraform validate
-      
-      - name: Terraform Format Check
-        run: terraform fmt -check -recursive
-
+  
       - name: Terraform Plan
         run: terraform plan 
 
