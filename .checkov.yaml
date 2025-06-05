@@ -12,9 +12,9 @@ enabled_check_types:
 #custom_checks_dir: ./checkov_custom_rules
 
 # Output settings
-output:
-  format: json
-  output_path: ./checkov_results.json
+#output:
+#  format: json
+#  output_path: ./checkov_results.json
 
 # Enable verbose logging
 verbose: true
