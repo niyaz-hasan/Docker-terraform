@@ -53,7 +53,7 @@ jobs:
       - name: Run Checkov Scan
         continue-on-error: true
         run: |
-          checkov -d .    # Scan the current directory for Terraform files.
+          checkov -d . --config-file .checkov.yml   # Scan the current directory for Terraform files.
       
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
