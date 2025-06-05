@@ -74,16 +74,25 @@ jobs:
 #          git add README.md
 #          git commit -m "Update Terraform docs [skip ci]" || echo "No changes to commit"
 #          git push
-      
-      - name: Commit Terraform Docs
+      - name: Commit and Push changes
         uses: EndBug/add-and-commit@v7
         with:
-          author_name: github-actions
-          author_email: github-actions@github.com
+          author_name: github-actions[bot]
+          author_email: github-actions[bot]@users.noreply.github.com
           message: "Update Terraform documentation"
-          push: true  # Ensure that it pushes the changes
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use the default GITHUB_TOKEN
+
+      
+#      - name: Commit Terraform Docs
+#        uses: EndBug/add-and-commit@v7
+#        with:
+#          author_name: github-actions
+#          author_email: github-actions@github.com
+#          message: "Update Terraform documentation"
+#          push: true  # Ensure that it pushes the changes
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
       
       - name: Setup Terraform
