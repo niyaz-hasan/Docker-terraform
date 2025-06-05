@@ -55,14 +55,6 @@ jobs:
         run: |
           checkov -d .    # Scan the current directory for Terraform files.
       
-      - name: Check if Checkov output file exists
-        run: |
-          if [ -f checkov_output.txt ]; then
-            echo "Checkov output found!"
-          else
-            echo "Checkov output not found!"
-            exit 1
-          fi
           
       # Optional: Upload Checkov results to GitHub.
     #  - name: Upload Checkov results to GitHub
@@ -70,13 +62,6 @@ jobs:
     #    with:
     #      name: checkov-results
     #      path: checkov_output.txt
-
-      # Optional: Fail the workflow if Checkov finds issues.
-      - name: Fail if Checkov finds issues
-        run: |
-          if grep -q "Failed" checkov_output.txt; then
-            exit 1
-          fi
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
