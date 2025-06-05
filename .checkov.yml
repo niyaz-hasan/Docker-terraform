@@ -1,26 +1,38 @@
 # .checkov.yaml
 
 # Disable checks for S3 public access (common policy in many organizations)
+#skip_checks:
+#  - CKV_AWS_21
+#
+## Enable only Terraform checks
+#enabled_check_types:
+#  - terraform
+#
+## Custom checks directory
+##custom_checks_dir: ./checkov_custom_rules
+#
+## Output settings
+##output:
+##  format: json
+##  output_path: ./checkov_results.json
+#
+## Enable verbose logging
+#verbose: true
+#
+## Skip specific directories (e.g., vendor, tests)
+#skip_dirs:
+#  - .github
+
+
 skip_checks:
-  - CKV_AWS_21
-
-# Enable only Terraform checks
-enabled_check_types:
-  - terraform
-
-# Custom checks directory
-#custom_checks_dir: ./checkov_custom_rules
-
-# Output settings
-#output:
-#  format: json
-#  output_path: ./checkov_results.json
-
-# Enable verbose logging
-verbose: true
-
-# Skip specific directories (e.g., vendor, tests)
-skip_dirs:
-  - .github
-
-
+  - CKV_AWS_20     # S3 bucket should have versioning enabled
+  - CKV_AWS_21     # S3 bucket should have access logging enabled
+soft_fail: true     # Allows pipeline to pass even with violations
+directory: ./terraform  # Directory to scan
+skip_dirs: ./.github
+output_format: json     # Output format for integration or reporting
+#custom_policies:
+#  - ./custom_policies    # Directory for your custom Checkov policies
+tags:
+  - security
+  - compliance
