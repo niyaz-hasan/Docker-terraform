@@ -1,0 +1,24 @@
+# .checkov.yaml
+
+# Disable specific checks (e.g., S3 versioning, access logging)
+skip_checks:
+  - CKV_AWS_20  # S3 bucket should have versioning enabled
+  - CKV_AWS_21  # S3 bucket should have access logging enabled
+
+# Allow the pipeline to pass even with violations (use with caution)
+soft_fail: true
+
+# Skip specific directories (e.g., .github)
+skip_dirs:
+  - ./.github
+
+# Output settings
+output:
+  format: json  # Output format for integration or reporting
+  output_path: ./checkov_results.json  # Output path for storing the results
+
+# Optional: Directory for custom Checkov policies (uncomment if you have custom rules)
+# custom_policies:
+#   - ./custom_policies    # Directory for your custom Checkov policies
+
+
