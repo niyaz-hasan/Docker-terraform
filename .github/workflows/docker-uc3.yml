@@ -113,7 +113,7 @@ jobs:
           message: 'Update README.md with Terraform docs'
 
       - name: Post Terraform Plan as PR comment
-        uses: peter-evans/comment-pr@v2
+        uses: peter-evans/comment-pr@v3  # Use the latest stable version (v3)
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
