@@ -78,8 +78,8 @@ jobs:
       - name: Commit Terraform Docs
         uses: EndBug/add-and-commit@v7
         with:
-          author_name: niyaz-hasan
-          author_email: niyazzz1996@gmail.com
+          author_name: github-actions
+          author_email: github-actions@github.com
           message: "Update Terraform documentation"
           push: true  # Ensure that it pushes the changes
         env:
