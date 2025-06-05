@@ -50,18 +50,15 @@ jobs:
           pip install checkov
 
       # Run Checkov to scan Terraform files.
-      - name: Run Checkov Scan
-        continue-on-error: true
-        run: |
-          checkov -d .    # Scan the current directory for Terraform files.
+#      - name: Run Checkov Scan
+#        continue-on-error: true
+#        run: |
+#          checkov -d .    # Scan the current directory for Terraform files.
       
           
-      # Optional: Upload Checkov results to GitHub.
-    #  - name: Upload Checkov results to GitHub
-    #    uses: actions/upload-artifact@v3
-    #    with:
-    #      name: checkov-results
-    #      path: checkov_output.txt
+      - name: Run Checkov Scan with Custom Rules
+        run: |
+          checkov -d . -p ./checkov_custom_rules  # Point to custom rules
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
