@@ -69,8 +69,8 @@ jobs:
  
       - name: Commit Terraform Docs
         run: |
-          git config --global user.name "niyaz-hasan"
-          git config --global user.email "niyazzz1996@gmail.com"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
           git add README.md
           git commit -m "Update Terraform docs [skip ci]" || echo "No changes to commit"
           git push
