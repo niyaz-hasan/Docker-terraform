@@ -66,6 +66,15 @@ jobs:
       - name: Generate Terraform Docs
         run: |
           terraform-docs markdown table . > README.md
+
+      # Commit and push the generated documentation (if necessary)
+      - name: Commit and push docs
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: 'GitHub Actions'
+          author_email: 'github-actions@github.com'
+          message: 'Update Terraform documentation'
+          add: 'README.md'  # Adjust path if you want to target a different file
  
 #      - name: Commit Terraform Docs
 #        run: |
@@ -74,14 +83,14 @@ jobs:
 #          git add README.md
 #          git commit -m "Update Terraform docs [skip ci]" || echo "No changes to commit"
 #          git push
-      - name: Commit and Push changes
-        uses: EndBug/add-and-commit@v7
-        with:
-          author_name: github-actions[bot]
-          author_email: github-actions[bot]@users.noreply.github.com
-          message: "Update Terraform documentation"
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use the default GITHUB_TOKEN
+#      - name: Commit and Push changes
+#        uses: EndBug/add-and-commit@v7
+#        with:
+#          author_name: github-actions[bot]
+#          author_email: github-actions[bot]@users.noreply.github.com
+#          message: "Update Terraform documentation"
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use the default GITHUB_TOKEN
 
       
 #      - name: Commit Terraform Docs
